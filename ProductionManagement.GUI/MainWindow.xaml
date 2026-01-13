@@ -1,0 +1,65 @@
+﻿<Window x:Class="ProductionManagement.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Production Tycoon" Height="650" Width="900">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,15,0">
+            <StackPanel>
+                <TextBlock Text="Simulation Configuration" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                <GroupBox Header="General" Margin="0,0,0,10" Padding="5">
+                    <StackPanel>
+                        <Label Content="Company Name:"/>
+                        <TextBox x:Name="CompanyNameBox"/>
+                        <Label Content="Initial Cash (Budget):"/>
+                        <TextBox x:Name="BudgetBox"/>
+                        <Label Content="Simulation Days:"/>
+                        <TextBox x:Name="DaysBox"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Human Resources" Margin="0,0,0,10" Padding="5">
+                    <StackPanel>
+                        <Label Content="Employees Count:"/>
+                        <TextBox x:Name="EmployeesBox"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Production &amp; Machines" Margin="0,0,0,10" Padding="5">
+                    <StackPanel>
+                        <Label Content="Number of Machines:"/>
+                        <TextBox x:Name="MachinesCountBox"/>
+                        <Label Content="Daily Fixed Cost:"/>
+                        <TextBox x:Name="FixedCostBox"/>
+                        <Label Content="Initial Raw Materials:"/>
+                        <TextBox x:Name="MaterialsBox"/>
+                        <Label Content="Breakdown Chance (0.0 - 1.0):"/>
+                        <TextBox x:Name="BreakdownChanceBox"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <Button Content="START SIMULATION" Click="StartSimulation_Click" Height="50" FontWeight="Bold" Background="#DDDDDD"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Simulation Log" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Grid.Row="1" x:Name="LogBox" 
+                     TextWrapping="Wrap" 
+                     AcceptsReturn="True" 
+                     VerticalScrollBarVisibility="Auto"
+                     IsReadOnly="True"
+                     FontFamily="Consolas"/>
+        </Grid>
+    </Grid>
+</Window>
+    

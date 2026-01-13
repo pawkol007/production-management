@@ -1,8 +1,10 @@
-﻿namespace production_management.Models
+﻿using production_management.Models;
+
+namespace ProductionManagement.GUI.Models
 {
     public class Employee : SimulationEntity
     {
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
         public decimal DailyRate { get; set; }
         public int ExperienceLevel { get; private set; } = 1;
 
@@ -24,20 +26,14 @@
             }
         }
 
-        public override decimal GetDailyCost()
-        {
-            return DailyRate;
-        }
+        public override decimal GetDailyCost() => DailyRate;
 
-        public override string GetDescription()
-        {
-            return $"{Name} {LastName} (ID: {Id})";
-        }
+        public override string GetDescription() => $"Lvl {ExperienceLevel} {LastName}, Rate: {DailyRate:C}";
 
         public override string ToString()
         {
             string shortId = Id.ToString()[..4].ToUpper();
-            return $"[{shortId}] {Name} {LastName} )";
+            return $"[{shortId}] {Name} {LastName} (Lvl {ExperienceLevel})";
         }
     }
 }

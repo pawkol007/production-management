@@ -1,8 +1,7 @@
 ﻿using production_management.Models;
-using ProductionManagement.Models;
-using ProductionManagement.Services;
+using production_management.Services;
 
-namespace ProductionManagement
+namespace production_management.src
 {
     internal class Program
     {

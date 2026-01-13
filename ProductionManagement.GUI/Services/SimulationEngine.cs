@@ -1,5 +1,6 @@
-﻿using production_management.Models;
-namespace production_management.Services
+﻿using ProductionManagement.GUI.Models;
+
+namespace ProductionManagement.Services
 {
     public static class SimulationEngine
     {
@@ -7,7 +8,7 @@ namespace production_management.Services
         {
             for (int day = 1; day <= days; day++)
             {
-                decimal income = company.DailyProduction();
+                decimal income = company.DailyProductionCapacity();
                 decimal costs = company.DailyEmployeeCost() + company.DailyMachineCost();
 
                 company.ApplyDay(income, costs);

@@ -1,5 +1,6 @@
-﻿using production_management.Models;
-namespace production_management.Services
+﻿using ProductionManagement.GUI.Models;
+
+namespace ProductionManagement.GUI.Services
 {
     public static class ReportService
     {

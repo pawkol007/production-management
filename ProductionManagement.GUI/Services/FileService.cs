@@ -1,7 +1,8 @@
-﻿using production_management.Models;
+﻿using ProductionManagement.GUI.Models;
+using System.IO;
 using System.Text.Json;
 
-namespace production_management.Services
+namespace ProductionManagement.GUI.Services
 {
     public static class FileService
     {
@@ -15,8 +16,7 @@ namespace production_management.Services
 
         public static void SaveCompany(Company company, string path)
         {
-            JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true };
-            var options = jsonSerializerOptions;
+            var options = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(company, options);
             File.WriteAllText(path, json);
         }
