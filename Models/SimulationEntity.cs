@@ -1,4 +1,6 @@
-﻿namespace production_management.Models
+﻿using System;
+
+namespace production_management.Models
 {
     public abstract class SimulationEntity(string name) : ICostGenerator
     {

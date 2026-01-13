@@ -1,7 +1,10 @@
-﻿using production_management.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
+using production_management.Models;
 
-namespace production_management.Services
+namespace ProductionManagement.Services
 {
     public static class EmployeeGenerator
     {
@@ -16,13 +19,13 @@ namespace production_management.Services
                 throw new FileNotFoundException("JSON files with names not found.");
 
             var firstNames = JsonSerializer.Deserialize<List<string>>(
-                File.ReadAllText(firstNamesPath)) ?? [];
+                File.ReadAllText(firstNamesPath)) ?? new();
 
             var lastNames = JsonSerializer.Deserialize<List<string>>(
-                File.ReadAllText(lastNamesPath)) ?? [];
+                File.ReadAllText(lastNamesPath)) ?? new();
 
             Random rand = new();
-            List<Employee> employees = [];
+            List<Employee> employees = new();
 
             for (int i = 0; i < count; i++)
             {

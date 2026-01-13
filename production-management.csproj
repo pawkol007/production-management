@@ -9,15 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ProductionManagement.GUI-kopia\**" />
-    <Compile Remove="ProductionManagement.GUI\**" />
-    <EmbeddedResource Remove="ProductionManagement.GUI-kopia\**" />
-    <EmbeddedResource Remove="ProductionManagement.GUI\**" />
-    <None Remove="ProductionManagement.GUI-kopia\**" />
-    <None Remove="ProductionManagement.GUI\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Data\LastNames.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

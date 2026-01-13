@@ -1,4 +1,4 @@
-﻿namespace production_management.Models
+﻿namespace ProductionManagement.Models
 {
     public interface IProducing
     {

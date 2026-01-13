@@ -1,5 +1,6 @@
 ﻿using production_management.Models;
-namespace production_management.Services
+
+namespace ProductionManagement.Services
 {
     public static class ReportService
     {

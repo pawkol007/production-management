@@ -1,7 +1,12 @@
-﻿namespace production_management.Models
+﻿namespace ProductionManagement.Models
 {
-    public abstract class Machine(string name)
+    public abstract class Machine
     {
-        public string Name { get; } = name;
+        public string Name { get; }
+
+        protected Machine(string name)
+        {
+            Name = name;
+        }
     }
 }
