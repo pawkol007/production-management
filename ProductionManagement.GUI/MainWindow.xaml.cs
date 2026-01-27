@@ -1,17 +1,19 @@
-﻿using production_management.Models;
-using ProductionManagement.GUI.Models;
-using ProductionManagement.GUI.Services;
+﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using ProductionManagement.GUI.Models;
+using ProductionManagement.GUI.Services;
 
 namespace ProductionManagement.GUI
 {
     public partial class MainWindow : Window
     {
         private readonly Stack<decimal> _budgetHistory = new();
-        private readonly Random _rng = new(); 
+        private readonly Random _rng = new();
 
         public MainWindow()
         {
@@ -31,9 +33,12 @@ namespace ProductionManagement.GUI
 
                 var company = new Company(config.CompanyName, config.Budget, config.Materials);
 
-
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 await InitializeCompanyResourcesAsync(company, config, basePath);
+
+                // log hired employees so names are visible immediately
+                UpdateLog("[HR] Employees:");
+                foreach (var emp in company.Employees) UpdateLog(emp.GetDescription());
 
                 await RunSimulationLoopAsync(company, config);
 
@@ -146,15 +151,39 @@ namespace ProductionManagement.GUI
                     UpdateLog($" {prop.Name}: {val}");
             }
 
+            // osobne zapisy, każdy w swoim bloku try-catch, logujemy pełne wyjątki (stack trace)
+            string chartPath = Path.Combine(path, "chart.bmp");
             try
             {
-                string chartPath = Path.Combine(path, "chart.bmp");
                 BitmapGenerator.GenerateBudgetChart(chartPath, _budgetHistory.ToArray());
                 UpdateLog($"Chart saved to: {chartPath}");
-
-                FileService.SaveCompany(company, Path.Combine(path, "save.json"));
             }
-            catch (Exception ex) { UpdateLog($"[ERROR] Saving failed: {ex.Message}"); }
+            catch (Exception ex)
+            {
+                UpdateLog($"[ERROR] Chart saving failed: {ex}");
+            }
+
+            string companyPath = Path.Combine(path, "company_save.json");
+            try
+            {
+                FileService.SaveCompany(company, companyPath);
+                UpdateLog($"Company saved to: {companyPath}");
+            }
+            catch (Exception ex)
+            {
+                UpdateLog($"[ERROR] Saving company failed: {ex}");
+            }
+
+            string employeesPath = Path.Combine(path, "employees_save.json");
+            try
+            {
+                FileService.SaveEmployees(company.Employees, employeesPath);
+                UpdateLog($"Employees saved to: {employeesPath}");
+            }
+            catch (Exception ex)
+            {
+                UpdateLog($"[ERROR] Saving employees failed: {ex}");
+            }
         }
 
         private void UpdateLog(string message)

@@ -1,24 +1,27 @@
 ﻿using System;
 
-namespace production_management.Models
+namespace ProductionManagement.GUI.Models
 {
-    public abstract class SimulationEntity(string name) : ICostGenerator
+    public abstract class SimulationEntity
     {
-        public string Name { get; set; } = name;
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        private static readonly Random _idRng = new();
+        public int Id { get; set; }
+        public string Name { get; set; }
 
+        protected SimulationEntity()
+        {
+            Name = string.Empty;
+            Id = _idRng.Next(1000, 9999);
+        }
+
+        protected SimulationEntity(string name)
+        {
+            Name = name;
+            Id = _idRng.Next(1000, 9999);
+        }
+
+        public abstract string Description { get; }
+        public abstract decimal GetDailyCost();
         public abstract string GetDescription();
-
-        public virtual decimal GetDailyCost()
-        {
-            return 0;
-        }
-
-        public string GetName() => Name;
-
-        public override string ToString()
-        {
-            return $"{Name} ({GetDescription()})";
-        }
     }
 }

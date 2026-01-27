@@ -1,29 +1,32 @@
 ﻿using System.IO;
 using System.Text;
+using ProductionManagement.GUI.Services;
 
 namespace ProductionManagement.GUI
 {
     public static class BitmapGenerator
     {
-        public static void GenerateBudgetChart(string filePath, List<decimal> history)
+        public static void GenerateBudgetChart(string filePath, IEnumerable<decimal> history)
         {
+            var list = history as List<decimal> ?? history.ToList();
+
             int width = 400;
             int height = 200;
 
             byte[] pixels = new byte[width * height * 3];
             for (int i = 0; i < pixels.Length; i++) pixels[i] = 255;
 
-            if (history.Count > 0)
+            if (list.Count > 0)
             {
-                decimal max = history.Max();
-                decimal min = history.Min();
+                decimal max = list.Max();
+                decimal min = list.Min();
                 if (max == min) max = min + 1;
 
-                int barWidth = width / Math.Max(1, history.Count);
+                int barWidth = width / Math.Max(1, list.Count);
 
-                for (int i = 0; i < history.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    decimal val = history[history.Count - 1 - i];
+                    decimal val = list[list.Count - 1 - i];
                     int barHeight = (int)((val - min) / (max - min) * (height - 10));
 
                     for (int x = i * barWidth; x < (i + 1) * barWidth && x < width; x++)
@@ -47,7 +50,7 @@ namespace ProductionManagement.GUI
 
         internal static void GenerateBudgetChart(string chartPath, decimal[] decimals)
         {
-            throw new NotImplementedException();
+            GenerateBudgetChart(chartPath, (IEnumerable<decimal>)decimals);
         }
 
         private static void SaveBmp(string path, int width, int height, byte[] data)

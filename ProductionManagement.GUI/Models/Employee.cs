@@ -1,14 +1,17 @@
-﻿using production_management.Models;
+﻿using System;
 
 namespace ProductionManagement.GUI.Models
 {
     public class Employee : SimulationEntity
     {
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; }
         public decimal DailyRate { get; set; }
-        public int ExperienceLevel { get; private set; } = 1;
 
-        public Employee() : base("Unknown") { }
+        public Employee() : base(string.Empty)
+        {
+            LastName = string.Empty;
+            DailyRate = 0m;
+        }
 
         public Employee(string firstName, string lastName, decimal rate) : base(firstName)
         {
@@ -16,24 +19,22 @@ namespace ProductionManagement.GUI.Models
             DailyRate = rate;
         }
 
+        private static readonly Random _rng = new();
+
         public void WorkDay()
         {
-            Random r = new();
-            if (r.NextDouble() > 0.95) 
+            if (_rng.NextDouble() > 0.95)
             {
-                ExperienceLevel++;
                 DailyRate += 10;
             }
         }
 
         public override decimal GetDailyCost() => DailyRate;
 
-        public override string GetDescription() => $"Lvl {ExperienceLevel} {LastName}, Rate: {DailyRate:C}";
+        public override string Description => $"[ID:{Id}] {Name} {LastName} - {DailyRate:C}";
 
-        public override string ToString()
-        {
-            string shortId = Id.ToString()[..4].ToUpper();
-            return $"[{shortId}] {Name} {LastName} (Lvl {ExperienceLevel})";
-        }
+        public override string GetDescription() => Description;
+
+        public override string ToString() => $"{Id}: {Name} {LastName}";
     }
 }
